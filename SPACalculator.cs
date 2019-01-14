@@ -141,6 +141,11 @@ namespace SPACalculator
         const int R_COUNT = 5;
         const int Y_COUNT = 63;
 
+        // no references for these
+        //const int L_MAX_SUBCOUNT = 64;
+        //const int B_MAX_SUBCOUNT = 5;
+        //const int R_MAX_SUBCOUNT = 40;
+
         // Buffers to prevent GC allocs when called repeatedly
         static double[] l_buffer = new double[L_COUNT];
         static double[] b_buffer = new double[B_COUNT];
@@ -149,10 +154,14 @@ namespace SPACalculator
 
         static double[] term_buffer = new double[5];
 
-        // no references for these
-        //const int L_MAX_SUBCOUNT = 64;
-        //const int B_MAX_SUBCOUNT = 5;
-        //const int R_MAX_SUBCOUNT = 40;
+        static double[] alpha;
+        static double[] delta;
+        static double[] mRts;
+        static double[] nuRts;
+        static double[] hRts;
+        static double[] alphaPrime;
+        static double[] deltaPrime;
+        static double[] hPrime;
 
         enum TERM1
         {
@@ -1102,15 +1111,23 @@ namespace SPACalculator
             spa.Delta = GeocentricDeclination(spa.Beta, spa.Epsilon, spa.Lamda);
         }
 
+
+
+
         static void CalculateEOTAndSunRiseTransitSet(ref SPAData spa)
         {
-            double[] alpha = new double[(int)TERM4.JD_COUNT], delta = new double[(int)TERM4.JD_COUNT];
-            double[] mRts = new double[(int)TERM5.SUN_COUNT],
-                nuRts = new double[(int)TERM5.SUN_COUNT],
+            if (alpha == null)
+            {
+                alpha = new double[(int)TERM4.JD_COUNT];
+                delta = new double[(int)TERM4.JD_COUNT];
+                mRts = new double[(int)TERM5.SUN_COUNT];
+                nuRts = new double[(int)TERM5.SUN_COUNT];
                 hRts = new double[(int)TERM5.SUN_COUNT];
-            double[] alphaPrime = new double[(int)TERM5.SUN_COUNT],
-                deltaPrime = new double[(int)TERM5.SUN_COUNT],
+                alphaPrime = new double[(int)TERM5.SUN_COUNT];
+                deltaPrime = new double[(int)TERM5.SUN_COUNT];
                 hPrime = new double[(int)TERM5.SUN_COUNT];
+            }
+
             double h0Prime = -1 * (SunRadius + spa.AtmosRefract);
             int i;
 
