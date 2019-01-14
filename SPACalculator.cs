@@ -141,6 +141,14 @@ namespace SPACalculator
         const int R_COUNT = 5;
         const int Y_COUNT = 63;
 
+        // Buffers to prevent GC allocs when called repeatedly
+        static double[] l_buffer = new double[L_COUNT];
+        static double[] b_buffer = new double[B_COUNT];
+        static double[] r_buffer = new double[R_COUNT];
+        static double[] y_buffer = new double[Y_COUNT];
+
+        static double[] term_buffer = new double[5];
+
         // no references for these
         //const int L_MAX_SUBCOUNT = 64;
         //const int B_MAX_SUBCOUNT = 5;
@@ -745,7 +753,7 @@ namespace SPACalculator
 
         static double EarthHeliocentricLongitude(double jme)
         {
-            double[] sum = new double[L_COUNT];
+            double[] sum = l_buffer;
             int i;
 
             for (i = 0; i < L_COUNT; i++)
@@ -757,7 +765,7 @@ namespace SPACalculator
 
         static double EarthHeliocentricLatitude(double jme)
         {
-            double[] sum = new double[L_COUNT];
+            double[] sum = l_buffer;
             int i;
 
             for (i = 0; i < B_COUNT; i++)
@@ -769,7 +777,7 @@ namespace SPACalculator
 
         static double EarthRadiusVector(double jme)
         {
-            double[] sum = new double[R_COUNT];
+            double[] sum = r_buffer;
             int i;
 
             for (i = 0; i < R_COUNT; i++)
@@ -820,7 +828,7 @@ namespace SPACalculator
 
         static double XYTermSummation(int i, double[] x = null)
         {
-            x = x ?? new double[(int)TERM2.TERM_X_COUNT];
+            x = x ?? term_buffer;
             int j;
             double sum = 0;
 
@@ -1059,7 +1067,7 @@ namespace SPACalculator
 
         static void CalculateGeocentricSunRightAscensionAndDeclination(ref SPAData spa)
         {
-            double[] x = new double[(int)TERM2.TERM_X_COUNT];
+            double[] x = term_buffer;
 
             spa.Jc = JulianCentury(spa.Jd);
 
