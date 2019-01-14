@@ -133,17 +133,18 @@ namespace SPACalculator
             SPA_ALL, //calculate all SPA output values
         }
 
-        static double Pi = 3.1415926535897932384626433832795028841971;
-        static double SunRadius = 0.26667;
+        const double Pi = 3.1415926535897932384626433832795028841971;
+        const double SunRadius = 0.26667;
 
-        static int L_COUNT = 6;
-        static int B_COUNT = 2;
-        static int R_COUNT = 5;
-        static int Y_COUNT = 63;
+        const int L_COUNT = 6;
+        const int B_COUNT = 2;
+        const int R_COUNT = 5;
+        const int Y_COUNT = 63;
 
-        static int L_MAX_SUBCOUNT = 64;
-        static int B_MAX_SUBCOUNT = 5;
-        static int R_MAX_SUBCOUNT = 40;
+        // no references for these
+        //const int L_MAX_SUBCOUNT = 64;
+        //const int B_MAX_SUBCOUNT = 5;
+        //const int R_MAX_SUBCOUNT = 40;
 
         enum TERM1
         {
